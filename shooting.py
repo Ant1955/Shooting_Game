@@ -18,8 +18,11 @@ target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
 
 color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+count_color = (255,255,255)   #  random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+font = pygame.font.SysFont('courier new', 30)
 
 running = True
+dollars = 0
 while running:
     screen.fill(color)
     for event in pygame.event.get():
@@ -30,8 +33,12 @@ while running:
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
                 # color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+                dollars += 1
 
     screen.blit(target_img, (target_x, target_y))
+    message = "Dollars: " + str(dollars)
+    text = font.render(message, True, count_color)
+    screen.blit(text, (50, SCREEN_HEIGHT - 50))
     pygame.display.update()
 
 pygame.quit()
