@@ -7,10 +7,10 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 pygame.display.set_caption("Shooting Game")
-icon = pygame.image.load('icon.png')
+icon = pygame.image.load('img/icon.png')
 pygame.display.set_icon(icon)
 
-target_img = pygame.image.load('target.png')
+target_img = pygame.image.load('img/target.png')
 target_width = 50     # target_img.get_width()
 target_height = 50    # target_img.get_height()
 
