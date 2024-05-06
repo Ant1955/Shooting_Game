@@ -13,6 +13,8 @@ pygame.display.set_icon(icon)
 target_img = pygame.image.load('img/target.png')
 target_width = 50     # target_img.get_width()
 target_height = 50    # target_img.get_height()
+dbl_target_width = 2 * target_width
+dbl_target_height = 2 * target_height
 
 target_x = random.randint(0, SCREEN_WIDTH - target_width)
 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
@@ -25,6 +27,17 @@ running = True
 dollars = 0
 while running:
     screen.fill(color)
+    drift = pygame.time.Clock().tick(300)
+    target_x += random.randint(-drift, drift)
+    target_y += random.randint(-drift, drift)
+    if target_x <= 0:
+        target_x = 0
+    elif target_x + dbl_target_width >= SCREEN_WIDTH:
+        target_x = SCREEN_HEIGHT - target_width
+    if target_y <= 0:
+        target_y = 0
+    elif target_y + dbl_target_height >= SCREEN_HEIGHT:
+        target_y = SCREEN_HEIGHT - target_height
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -32,7 +45,13 @@ while running:
             if target_x <= event.pos[0] <= target_x + target_width and target_y <= event.pos[1] <= target_y + target_height:
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGHT - target_height)
-                # color = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+                color = (color[0] + drift, color[1] + drift, color[2] - drift)
+                if int(color[0]) > 255:
+                    color = (127, color[1], color[2])
+                if int(color[1]) > 255:
+                    color = (color[0], 127, color[2])
+                if int(color[2]) < 0:
+                    color = (color[0], color[1], 127)
                 dollars += 1
 
     screen.blit(target_img, (target_x, target_y))
